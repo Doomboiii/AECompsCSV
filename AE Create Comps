@@ -1,6 +1,6 @@
 // Batch Create After Effects Comps, javascript
 
-var csvFile = File("~[INSERT FILENAME].CSV");
+var csvFile = File("~\[LOCATION]\[INSERT FILENAME].CSV");
 
 var csvData = [];
 
@@ -13,12 +13,14 @@ do{
 csvFile.close();
 
 app.beginUndoGroup("Make Comps");
+// allows undo with Ctrl+Z within app.begin/app.end
 
 var thisCSVRow, thisComp, thisText;
 for(var i = 1; i < csvData.length; i++) {
         thisCSVRow = csvData[i].split(",");
         thisComp = app.project.items.addComp(thisCSVRow[0], parseInt(thisCSVRow[1]), parseInt(thisCSVRow[2]), 1, 5, 29.97);
-        // Parameters at end of line 21 = (pixel ratio, duration (in seconds), frame rate)
+        // Parameters at end of line 21 = (comp name), (compWidth), (compHeight), pixel ratio, duration (in seconds), frame rate (can also read in))
+        // Reads cells as strings, must parseInt to work for dimensions.
         thisText = thisComp.layers.addText(thisCSVRow[0]);
         }
 
